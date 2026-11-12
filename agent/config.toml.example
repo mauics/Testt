@@ -1,0 +1,31 @@
+# Copy this file to config.toml (same folder) and edit the values below
+# for this specific PC. config.toml itself is NOT meant to be shared between
+# machines — every PC needs its own DISPLAY_NAME / ROOM / SYSTEM_UNIT.
+
+SERVER_ADDRESS = "localhost"     # your server's IP, e.g. "192.168.1.50" (use "localhost" only if agent and server are the same PC)
+PORT = 8000
+API_KEY = "DETECS"                  # must match API_KEY in server.py
+
+DISPLAY_NAME = "System Unit 1"      # shown on the dashboard (default if left out) — give each PC its own
+ROOM = "201"                        # this PC's room. The dashboard's room filter buttons look for it (admin manages them under Monitoring System -> "🏫 Manage rooms"; 201 = Computer Center 1, 202 = Computer Center 2 to start). Also prefills "Report a Problem"
+PING_PORT = 8770                    # the server checks the agent on this port every 10 minutes (and when the PC goes quiet). 0 = off. install_startup.bat opens it in Windows Firewall for the local network.
+SYSTEM_UNIT = "Unit 5"              # this PC's unit/asset label
+
+REPORT_INTERVAL = 5                 # seconds between full reports (starting value — the admin's value from the dashboard's Intervals takes over once the server replies)
+DEVICE_WATCH_INTERVAL = 2           # how often to check for keyboard/mouse/device plug-unplug (same: the server's value takes over)
+INTERNAL_SCAN_MINUTES = 1           # how often the internal parts list (CPU, RAM sticks, GPU, drives) is read again, 1 to 1440 minutes (same: the server's value takes over)
+
+# Keyboard/Mouse missing-alerts. By default the agent LEARNS them: the first time an
+# external keyboard or mouse is seen, it is remembered (in learned_devices.json next to
+# agent_windows.py). If a remembered one is later unplugged, the dashboard shows
+# "No keyboard/mouse detected". Until one has been seen, nothing is raised.
+# After replacing a keyboard/mouse, right-click the tray icon -> "Forget remembered
+# keyboard/mouse" so the new one is learned.
+AUTO_LEARN_INPUT_DEVICES = true
+
+# Optional manual override. Pin the check to specific devices' VID/PID instead of
+# using what was learned (useful if a dongle or macro-key mouse is learned wrongly).
+# Separate several devices with commas. Anything set here wins over learned values for
+# that kind. Find a VID/PID by running diagnose_devices.py (Device ID field).
+KEYBOARD_ID = ""   # e.g. "VID_0C45&PID_8006"
+MOUSE_ID = ""       # e.g. "VID_1038&PID_182E, VID_1D57&PID_FA60"

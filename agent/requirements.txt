@@ -1,0 +1,7 @@
+psutil
+requests
+wmi
+pywin32
+pystray
+pillow
+tomli; python_version < "3.11"
